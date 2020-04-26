@@ -1,38 +1,63 @@
 # Capify::Rbenv
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/capify/rbenv`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Capistrano recipes to setup rbenv, ruby and bundler.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-```ruby
-gem 'capify-rbenv'
+```shell
+gem 'capistrano', '~> 3.9'
+gem 'capistrano-rbenv', '~> 2.1'
 ```
 
 And then execute:
 
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install capify-rbenv
+```shell
+$ bundle install
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+```shell
+# Capfile
+require 'capistrano/rbenv'
 
-## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake nil` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+# config/deploy.rb
+set :rbenv_ruby, '2.7.1' # Set ruby version to install (Required)
+set :rbenv_bundler, '2.1.4' # Set bundler version to install (Required)
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+# In case you want to set ruby version from .ruby-version file:
+# set :rbenv_ruby, File.read('.ruby-version').strip
+```
+
+Following is the list of all optional configurable options along with their default
+values.
+
+```shell
+# Set rbenv installation type (user/system)
+set :rbenv_type, :user
+
+# Set rbenv installation path
+set :rbenv_path, '$HOME/.rbenv'
+
+# Set customs bins to create under rbenv
+set :rbenv_map_bins, %w[rake gem bundle ruby rails]
+
+# Set list of custom dependencies to install
+set :rbenv_deps, ''
+
+# Set list of default dependencies to install
+set :rbenv_default_deps, 'libssl-dev zlib1g-dev libreadline-dev build-essential'
+
+# Set dependencies installer
+set :rbenv_deps_installler, 'apt-get install -y'
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/capify-rbenv.
+Bug reports and pull requests are welcome on GitHub at https://github.com/uxxman/capify-rbenv.
 
 
 ## License

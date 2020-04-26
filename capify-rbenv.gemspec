@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Muhammad Usman']
   spec.email         = ['uxman.sherwani@gmail.com']
 
-  spec.summary       = 'Capistrano recipe to setup ruby using rbenv'
+  spec.summary       = 'Capistrano recipe to setup rbenv, ruby and bundler'
   spec.description   = 'Setup ruby environemnt on remote server(s) using rbenv'
   spec.homepage      = 'https://github.com/uxxman/capify-rbenv'
   spec.license       = 'MIT'
