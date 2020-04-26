@@ -6,9 +6,9 @@ Capistrano recipes to setup rbenv, ruby and bundler.
 
 Add this line to your application's Gemfile:
 
-```shell
-gem 'capistrano', '~> 3.9'
-gem 'capistrano-rbenv', '~> 2.1'
+```ruby
+gem 'capistrano', '~> 3.13'
+gem 'capify-rbenv', '~> 1.0'
 ```
 
 And then execute:
@@ -19,7 +19,7 @@ $ bundle install
 
 ## Usage
 
-```shell
+```ruby
 # Capfile
 require 'capistrano/rbenv'
 
@@ -32,10 +32,9 @@ set :rbenv_bundler, '2.1.4' # Set bundler version to install (Required)
 # set :rbenv_ruby, File.read('.ruby-version').strip
 ```
 
-Following is the list of all optional configurable options along with their default
-values.
+Following is the list of all optional configurable options along with their default values.
 
-```shell
+```ruby
 # Set rbenv installation type (user/system)
 set :rbenv_type, :user
 
@@ -53,6 +52,32 @@ set :rbenv_default_deps, 'libssl-dev zlib1g-dev libreadline-dev build-essential'
 
 # Set dependencies installer
 set :rbenv_deps_installler, 'apt-get install -y'
+```
+
+When you `require 'capistrano/rbenv'` in your Capfile, it will add default hooks to capistrano deploy that will automatically setup everything (rbenv, ruby, bundler) you need. If you want to skip the default hooks and setup everything on your own, use the following instructions,
+
+```ruby
+# Capfile
+require 'capistrano/rbenv/without_hooks'
+
+
+# Inside your custom capistrano tasks
+after :some_task, 'rbenv:setup'
+
+# Or like this
+task :custom_setup do
+  invoke 'rbenv:setup'
+end
+```
+
+## Available tasks
+
+```ruby
+rbenv:install              # Install rbenv
+rbenv:install_ruby         # Install ruby
+rbenv:install_bundler      # Install bundler gem
+rbenv:install_ruby_build   # Install/Update ruby_build - rbenv plugin
+rbenv:setup                # Setup rbenv, ruby and bundler
 ```
 
 ## Contributing
