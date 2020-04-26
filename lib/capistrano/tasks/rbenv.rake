@@ -29,7 +29,7 @@ namespace :rbenv do
 
 
   desc 'Install ruby'
-  task install_ruby: ['rbenv:map_bins'] do
+  task :install_ruby do
     on roles(:app) do
       next if test "[ -d #{fetch(:rbenv_ruby_dir)} ]"
 
@@ -42,7 +42,7 @@ namespace :rbenv do
 
 
   desc 'Install bundler gem'
-  task install_bundler: ['rbenv:map_bins'] do
+  task :install_bundler do
     on roles(:app) do
       next if test :gem, :query, "-q -i -n ^bundler$ -v #{fetch(:rbenv_bundler)}"
 
@@ -65,6 +65,7 @@ namespace :rbenv do
 
   desc 'Setup ruby and bundler'
   task :setup do
+    invoke 'rbenv:map_bins'
     invoke 'rbenv:install_ruby'
     invoke 'rbenv:install_bundler'
   end
