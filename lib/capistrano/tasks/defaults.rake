@@ -8,6 +8,14 @@ namespace :load do
       build-essential
     ]
 
+    default_bins = %w[
+      gem
+      rake
+      ruby
+      rails
+      bundle
+    ]
+
     # Set ruby version to install using rbenv (Required)
     # set :rbenv_ruby, '2.7.1'
 
@@ -24,16 +32,13 @@ namespace :load do
     set_if_empty :rbenv_ruby_dir, "#{fetch(:rbenv_path)}/versions/#{fetch(:rbenv_ruby)}"
 
     # Set list of custom dependencies to install
-    set_if_empty :rbenv_deps, ''
-
-    # Set list of default dependencies to install
-    set_if_empty :rbenv_default_deps, default_deps.join(' ')
+    set_if_empty :rbenv_deps, default_deps.join(' ')
 
     # Set dependencies installer
     set_if_empty :rbenv_deps_installler, 'apt-get install -y'
 
     # Set customs bins to create under rbenv
-    set_if_empty :rbenv_map_bins, %w[rake gem bundle ruby rails]
+    set_if_empty :rbenv_map_bins, default_bins.join(' ')
   end
 end
 
@@ -44,7 +49,7 @@ Capistrano::DSL.stages.each do |stage|
     SSHKit.config.command_map[:rbenv] = "#{fetch(:rbenv_path)}/bin/rbenv"
     rbenv_prefix = fetch(:rbenv_prefix, "#{fetch(:rbenv_path)}/bin/rbenv exec")
 
-    fetch(:rbenv_map_bins).each do |command|
+    fetch(:rbenv_map_bins).uniq.each do |command|
       SSHKit.config.command_map.prefix[command.to_sym].unshift(rbenv_prefix)
     end
   end
