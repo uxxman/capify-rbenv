@@ -38,7 +38,7 @@ namespace :load do
     set_if_empty :rbenv_deps_installler, 'apt-get install -y'
 
     # Set customs bins to create under rbenv
-    set_if_empty :rbenv_map_bins, default_bins.join(' ')
+    set_if_empty :rbenv_map_bins, default_bins
   end
 end
 
