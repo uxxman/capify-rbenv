@@ -1,5 +1,5 @@
 module Capistrano
   module Rbenv
-    VERSION = '3.0.1'.freeze
+    VERSION = '1.0.0'.freeze
   end
 end
