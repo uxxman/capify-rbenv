@@ -1,6 +1,11 @@
 # Capify::Rbenv
 
-Capistrano recipes to setup rbenv, ruby and bundler.
+Capistrano recipes to setup rbenv, ruby and bundler. It provides all the goodies of [capistrano-rbenv](https://github.com/capistrano/rbenv) and adds more features, like:
+
+* Install [rbenv](https://github.com/rbenv/rbenv) if not installed already.
+* Install [ruby-build](https://github.com/rbenv/ruby-build) if not installed already.
+* Install specified ruby version if not installed already.
+* Install specified bundler version if not installed already.
 
 ## Installation
 
