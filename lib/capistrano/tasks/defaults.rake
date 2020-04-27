@@ -35,3 +35,16 @@ namespace :load do
     set :rbenv_deps_installler, fetch(:rbenv_deps_installler, 'apt-get install -y')
   end
 end
+
+
+Capistrano::DSL.stages.each do |stage|
+  after stage, :rbenv_map_bins do
+    SSHKit.config.default_env.merge!({ rbenv_root: fetch(:rbenv_path), rbenv_version: fetch(:rbenv_ruby) })
+    SSHKit.config.command_map[:rbenv] = "#{fetch(:rbenv_path)}/bin/rbenv"
+    rbenv_prefix = fetch(:rbenv_prefix, "#{fetch(:rbenv_path)}/bin/rbenv exec")
+
+    fetch(:rbenv_map_bins).each do |command|
+      SSHKit.config.command_map.prefix[command.to_sym].unshift(rbenv_prefix)
+    end
+  end
+end
