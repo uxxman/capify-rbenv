@@ -40,6 +40,9 @@ set :rbenv_bundler, '2.1.4' # Set bundler version to install (Required)
 Following is the list of all optional configurable options along with their default values and examples.
 
 ```ruby
+# Set role on which rbenv setup will apply
+set :rbenv_role, :app
+
 # Set rbenv installation type (user/system)
 set :rbenv_type, :user
 

@@ -5,7 +5,7 @@ namespace :rbenv do
 
   desc 'Install rbenv'
   task :install do
-    on roles(:app) do
+    on roles(fetch(:rbenv_role)) do
       next if test "[ -d #{fetch(:rbenv_path)} ]"
 
       execute :sudo, "#{fetch(:rbenv_deps_installler)} #{fetch(:rbenv_default_deps)} #{fetch(:rbenv_deps)}"
@@ -16,7 +16,7 @@ namespace :rbenv do
 
   desc 'Install/Update ruby-build - rbenv plugin'
   task :install_ruby_build do
-    on roles(:app) do
+    on roles(fetch(:rbenv_role)) do
       ruby_build_path = "#{fetch(:rbenv_path)}/plugins/ruby-build"
 
       if test "[ -d #{ruby_build_path} ]"
@@ -31,7 +31,7 @@ namespace :rbenv do
 
   desc 'Install ruby'
   task :install_ruby do
-    on roles(:app) do
+    on roles(fetch(:rbenv_role)) do
       next if test "[ -d #{fetch(:rbenv_ruby_dir)} ]"
 
       invoke 'rbenv:install_ruby_build'
@@ -42,7 +42,7 @@ namespace :rbenv do
 
   desc 'Install bundler'
   task :install_bundler do
-    on roles(:app) do
+    on roles(fetch(:rbenv_role)) do
       next if test :gem, :query, "-q -i -n ^bundler$ -v #{fetch(:rbenv_bundler)}"
 
       invoke 'rbenv:install_ruby'

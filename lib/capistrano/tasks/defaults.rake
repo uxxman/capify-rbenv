@@ -22,6 +22,9 @@ namespace :load do
     # Set bundler version to install using rbenv (Required)
     # set :rbenv_bundler, '2.1.4'
 
+    # Set role on which rbenv setup will apply
+    set_if_empty :rbenv_role, :app
+
     # Set rbenv installation type (user/system)
     set_if_empty :rbenv_type, :user
 
