@@ -13,7 +13,7 @@ Add this line to your application's Gemfile:
 
 ```ruby
 gem 'capistrano', '~> 3.13'
-gem 'capify-rbenv', '~> 1.0'
+gem 'capify-rbenv', '~> 5.0'
 ```
 
 And then execute:
@@ -27,11 +27,14 @@ $ bundle install
 ```ruby
 # Capfile
 require 'capistrano/rbenv'
+install_plugin Capistrano::Rbenv # Required: Setup rbenv
+install_plugin Capistrano::Rbenv::SetupRuby # Optional: Install/Setup ruby 
+install_plugin Capistrano::Rbenv::SetupBundler # Optional: Install/Setup bundler
 
 
 # config/deploy.rb
-set :rbenv_ruby, '2.7.1' # Set ruby version to install (Required)
-set :rbenv_bundler, '2.1.4' # Set bundler version to install (Required)
+set :rbenv_ruby, '2.7.1' # Set ruby version to use
+set :rbenv_bundler, '2.1.4' # Set bundler version to use
 
 # In case you want to set ruby version from .ruby-version file:
 # set :rbenv_ruby, File.read('.ruby-version').strip
@@ -54,40 +57,24 @@ set :rbenv_ruby_dir, "#{fetch(:rbenv_path)}/versions/#{fetch(:rbenv_ruby)}"
 
 # Set or append the list of dependencies to install
 # See lib/capistrano/tasks/defaults.rake for default dependencies
-append :rbenv_deps, 'libsqlite3-dev', 'sqlite3'
+append :rbenv_ruby_deps, 'libsqlite3-dev', 'sqlite3'
 
 # Set dependencies installer
-set :rbenv_deps_installler, 'apt-get install -y'
+set :rbenv_ruby_deps_installler, 'apt-get install -y'
 
 # Set or append customs bins to create under rbenv
 # See lib/capistrano/tasks/defaults.rake for default bins
 append :rbenv_map_bins, 'puma', 'pumactl'
 ```
 
-When you `require 'capistrano/rbenv'` in your Capfile, it will add default hooks to capistrano deploy that will automatically setup everything (rbenv, ruby, bundler) you need. If you want to skip the default hooks and setup everything on your own, use the following instructions,
-
-```ruby
-# Capfile
-require 'capistrano/rbenv/without_hooks'
-
-
-# Then add it as a hook
-after :some_task, 'rbenv:setup'
-
-# Or invoke manually
-task :custom_setup do
-  invoke 'rbenv:setup'
-end
-```
-
 ## Available tasks
 
 ```ruby
 rbenv:install              # Install rbenv
+rbenv:map_bins             # Map binaries to rbenv path
 rbenv:install_ruby         # Install ruby
 rbenv:install_bundler      # Install bundler gem
 rbenv:install_ruby_build   # Install/Update ruby_build - rbenv plugin
-rbenv:setup                # Setup rbenv, ruby-build, ruby and bundler
 ```
 
 ## Contributing

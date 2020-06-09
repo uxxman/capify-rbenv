@@ -5,7 +5,7 @@ namespace :rbenv do
   desc 'Install ruby dependencies'
   task :install_ruby_deps do
     on roles(fetch(:rbenv_role)) do
-      execute "#{fetch(:rbenv_ruby_deps_installler)} #{fetch(:rbenv_ruby_deps)}"
+      execute "#{fetch(:rbenv_ruby_deps_installler)} #{fetch(:rbenv_ruby_deps).join(' ')}"
     end
   end
 

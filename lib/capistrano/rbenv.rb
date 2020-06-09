@@ -1,11 +1,13 @@
 module Capistrano
-  class Rbenv < Capistrano::Plugin
+  class Rbenv < Plugin
     def define_tasks
-      eval_rakefile File.expand_path('../tasks/rbenv.rake', __dir__)
+      eval_rakefile File.expand_path('tasks/rbenv.rake', __dir__)
     end
 
     def register_hooks
-      after 'deploy:started', 'rbenv:map_bins'
+      Capistrano::DSL.stages.each do |stage|
+        after stage, 'rbenv:map_bins'
+      end
     end
 
     def set_defaults

@@ -1,7 +1,7 @@
-module Capistrano::Rbenv
-  class SetupRuby < Capistrano::Plugin
+module Capistrano
+  class Rbenv::SetupRuby < Plugin
     def define_tasks
-      eval_rakefile File.expand_path('../../tasks/setup_ruby.rake', __dir__)
+      eval_rakefile File.expand_path('../tasks/setup_ruby.rake', __dir__)
     end
 
     def register_hooks
