@@ -70,11 +70,12 @@ append :rbenv_map_bins, 'puma', 'pumactl'
 ## Available tasks
 
 ```ruby
-rbenv:install              # Install rbenv
-rbenv:map_bins             # Map binaries to rbenv path
-rbenv:install_ruby         # Install ruby
-rbenv:install_bundler      # Install bundler gem
-rbenv:install_ruby_build   # Install/Update ruby_build - rbenv plugin
+rbenv:install                # Install rbenv
+rbenv:map_bins               # Map binaries to rbenv path
+rbenv:install_bundler        # Install bundler
+rbenv:install_ruby           # Install ruby
+rbenv:install_ruby_build     # Install/Update ruby-build - rbenv plugin
+rbenv:install_ruby_deps      # Install ruby dependencies
 ```
 
 ## Contributing
